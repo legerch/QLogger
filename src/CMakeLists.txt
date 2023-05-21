@@ -44,9 +44,12 @@ set(PROJECT_HEADERS
     config.h
 
     qloggerglobal.h
+
+    qlogger/qloghandler.h
 )
 
 set(PROJECT_SOURCES
+    qlogger/qloghandler.cpp
 )
 
 set(PROJECT_UI

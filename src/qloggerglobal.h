@@ -2,7 +2,7 @@
 #define QLOGGER_GLOBAL_H
 
 #include "config.h"
-#include <QtCore/qglobal.h>
+#include <QtGlobal>
 
 /**********************************
  * Library management
