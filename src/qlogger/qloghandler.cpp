@@ -63,7 +63,7 @@ bool QLogHandler::init(const QString &logFilename, int maxFiles, qint64 maxFileS
     }
 
     /* Open file log to use */
-    bool succeed = openFile(generateFilepath(0));
+    bool succeed = openFile(generateFilepath(0), false);
     if(!succeed){
         return false;
     }
@@ -102,13 +102,21 @@ QString QLogHandler::generateFilepath(int index) const
     return m_currentDir.absoluteFilePath(filename + m_fileExt);
 }
 
-bool QLogHandler::openFile(const QString &filepath)
+bool QLogHandler::openFile(const QString &filepath, bool truncate)
 {
     /* Assign file */
     m_currentFile.setFileName(filepath);
 
+    /* Set open flags */
+    QFile::OpenMode openFlags = QIODevice::WriteOnly | QIODevice::Text;
+    if(truncate){
+        openFlags |= QIODevice::Truncate;
+    }else{
+        openFlags |= QIODevice::Append;
+    }
+
     /* Open it and prepare stream */
-    bool succeed = m_currentFile.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
+    bool succeed = m_currentFile.open(openFlags);
     if(!succeed){
         return false;
     }
@@ -125,32 +133,60 @@ void QLogHandler::closeFile()
     }
 }
 
-bool QLogHandler::sizeFileIsValid() const
+bool QLogHandler::sizeFileIsUnderLimit() const
 {
     return m_currentFile.size() < m_maxFileSize;
 }
 
+bool QLogHandler::rotateFiles()
+{
+    /* Close current file */
+    closeFile();
+
+    /* Rotate all files by renaming */
+    bool succeed = true;
+    for(int i=m_maxFiles; i>0; --i){
+        const QString src = generateFilepath(i - 1);
+
+        if(QFile::exists(src)){
+            const QString target = generateFilepath(i);
+
+            succeed &= renameFile(src, target);
+            if(!succeed){
+                break;
+            }
+        }
+    }
+
+    /* Open base file and truncate any existing data */
+    succeed &= openFile(generateFilepath(0), true);
+
+    return succeed;
+}
+
+//TODO: doc (oldName must exist)
+bool QLogHandler::renameFile(const QString &oldName, const QString &newName)
+{
+    /* Remove target file is exists */
+    if(QFile::exists(newName)){
+        QFile::remove(newName);
+    }
+
+    /* Rename file */
+    return QFile::rename(oldName, newName);
+}
+
 void QLogHandler::messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg)
 {
-    QByteArray localMsg = msg.toLocal8Bit();
-    const char *file = context.file ? context.file : "";
-    const char *function = context.function ? context.function : "";
-    switch (idType) {
-    case QtDebugMsg:
-        fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-        break;
-    case QtInfoMsg:
-        fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-        break;
-    case QtWarningMsg:
-        fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-        break;
-    case QtCriticalMsg:
-        fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-        break;
-    case QtFatalMsg:
-        fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), file, context.line, function);
-        break;
+    QLogHandler &logHandler = QLogHandler::instance();
+    QMutexLocker locker(&logHandler.m_mutex);
+
+    /* Write to file */
+    logHandler.m_stream << messageFormat(idType, context, msg);
+
+    /* Do file size is still valid */
+    if(!logHandler.sizeFileIsUnderLimit()){
+        logHandler.rotateFiles();
     }
 }
 

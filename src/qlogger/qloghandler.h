@@ -4,6 +4,7 @@
 #include "qloggerglobal.h"
 
 #include <QDir>
+#include <QMutex>
 #include <QString>
 
 namespace QLogger
@@ -30,10 +31,13 @@ private:
     bool isInitialized() const;
 
     QString generateFilepath(int index) const;
-    bool openFile(const QString &filepath);
+    bool openFile(const QString &filepath, bool truncate);
     void closeFile();
 
-    bool sizeFileIsValid() const;
+    bool sizeFileIsUnderLimit() const;
+
+    bool rotateFiles();
+    bool renameFile(const QString &oldName, const QString &newName);
 
 private:
     static void messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg);
@@ -53,9 +57,9 @@ private:
 
     QDir m_currentDir;
     QFile m_currentFile;
+    QTextStream m_stream;
 
-private:
-    static QTextStream m_stream;
+    QMutex m_mutex;
 };
 
 } // Namespace QLogger
