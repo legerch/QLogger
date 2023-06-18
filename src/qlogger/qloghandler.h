@@ -27,11 +27,13 @@ public:
     static QLogHandler &instance();
 
 private:
-    bool isInitialized();
+    bool isInitialized() const;
 
-    QString generateFilepath(int index);
+    QString generateFilepath(int index) const;
     bool openFile(const QString &filepath);
     void closeFile();
+
+    bool sizeFileIsValid() const;
 
 private:
     static void messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg);

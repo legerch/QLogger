@@ -84,12 +84,12 @@ QLogHandler &QLogHandler::instance()
     return instance;
 }
 
-bool QLogHandler::isInitialized()
+bool QLogHandler::isInitialized() const
 {
     return m_currentFile.isOpen();
 }
 
-QString QLogHandler::generateFilepath(int index)
+QString QLogHandler::generateFilepath(int index) const
 {
     QString filename = m_fileBasename;
 
@@ -125,8 +125,11 @@ void QLogHandler::closeFile()
     }
 }
 
-//TODO: doc
-// Current implemntation is taken directly from Qt doc (https://doc.qt.io/qt-5/qtglobal.html#qInstallMessageHandler)
+bool QLogHandler::sizeFileIsValid() const
+{
+    return m_currentFile.size() < m_maxFileSize;
+}
+
 void QLogHandler::messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();
