@@ -154,6 +154,38 @@ void QLogHandler::messageHandler(QtMsgType idType, const QMessageLogContext &con
     }
 }
 
+//TODO: doc (use to manage case for logcontext not complete in release mode if macro is undefined)
+QString QLogHandler::messageFormat(QtMsgType idType, const QMessageLogContext &context, const QString &msg)
+{
+#if defined(QT_MESSAGELOGCONTEXT)
+    static const QString logPattern = QString("[%1] %2 (%3:%4, %5)\n");
+    return logPattern
+        .arg(qtMsgTypeToString(idType), msg)
+        .arg(context.file)
+        .arg(context.line)
+        .arg(context.function);
+#else
+    static const QString logPattern = QString("[%1] %2\n");
+    return logPattern
+        .arg(qtMsgTypeToString(idType), msg);
+#endif
+}
+
+QString QLogHandler::qtMsgTypeToString(QtMsgType idType)
+{
+    static const QMap<QtMsgType, QString> MAP_MSG_TYPE_TO_STR =
+    {
+        {QtDebugMsg, "debug"},
+        {QtInfoMsg, "info"},
+        {QtWarningMsg, "warning"},
+        {QtCriticalMsg, "critical"},
+        {QtFatalMsg, "fatal"},
+        {QtSystemMsg, "system"}
+    };
+
+    return MAP_MSG_TYPE_TO_STR.value(idType, "unknown");
+}
+
 /*****************************/
 /* Functions implementation  */
 /*        Structures         */

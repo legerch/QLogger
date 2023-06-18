@@ -38,6 +38,9 @@ private:
 private:
     static void messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg);
 
+    static QString messageFormat(QtMsgType idType, const QMessageLogContext &context, const QString &msg);
+    static QString qtMsgTypeToString(QtMsgType idType);
+
 private:
     explicit QLogHandler();
     ~QLogHandler();
