@@ -43,13 +43,86 @@ QLogHandler::QLogHandler()
 
 QLogHandler::~QLogHandler()
 {
-    /* Nothing to do */
+    closeFile();
+}
+
+bool QLogHandler::init(const QString &logFilename, int maxFiles, qint64 maxFileSize)
+{
+    /* Fill logger basic informations */
+    QFileInfo infoPattern(logFilename);
+
+    m_maxFileSize = maxFileSize;
+    m_maxFiles = maxFiles;
+    m_fileBasename = infoPattern.baseName();
+    m_fileExt = infoPattern.suffix();
+
+    /* Create logs folder if needed */
+    m_currentDir = infoPattern.dir();
+    if(!m_currentDir.exists()){
+        m_currentDir.mkdir(".");
+    }
+
+    /* Open file log to use */
+    bool succeed = openFile(generateFilepath(0));
+    if(!succeed){
+        return false;
+    }
+
+    /* Install custom message handler */
+    qInstallMessageHandler(messageHandler);
+    return true;
+}
+
+void QLogHandler::desinit()
+{
+    closeFile();
 }
 
 QLogHandler &QLogHandler::instance()
 {
     static QLogHandler instance;
     return instance;
+}
+
+bool QLogHandler::isInitialized()
+{
+    return m_currentFile.isOpen();
+}
+
+QString QLogHandler::generateFilepath(int index)
+{
+    QString filename = m_fileBasename;
+
+    /* Index different from base ? */
+    if(index != 0){
+        filename.append(QString::number(index));
+    }
+
+    /* Return complete filepath */
+    return m_currentDir.absoluteFilePath(filename + m_fileExt);
+}
+
+bool QLogHandler::openFile(const QString &filepath)
+{
+    /* Assign file */
+    m_currentFile.setFileName(filepath);
+
+    /* Open it and prepare stream */
+    bool succeed = m_currentFile.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
+    if(!succeed){
+        return false;
+    }
+
+    m_stream.setDevice(&m_currentFile);
+
+    return true;
+}
+
+void QLogHandler::closeFile()
+{
+    if(m_currentFile.isOpen()){
+        m_currentFile.close();
+    }
 }
 
 //TODO: doc
