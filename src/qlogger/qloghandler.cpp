@@ -99,7 +99,7 @@ QString QLogHandler::generateFilepath(int index) const
     }
 
     /* Return complete filepath */
-    return m_currentDir.absoluteFilePath(filename + m_fileExt);
+    return m_currentDir.absoluteFilePath(filename + "." + m_fileExt);
 }
 
 bool QLogHandler::openFile(const QString &filepath, bool truncate)
@@ -197,7 +197,7 @@ QString QLogHandler::messageFormat(QtMsgType idType, const QMessageLogContext &c
     static const QString logPattern = QString("[%1] %2 (%3:%4, %5)\n");
     return logPattern
         .arg(qtMsgTypeToString(idType), msg)
-        .arg(context.file)
+        .arg(QFileInfo(context.file).fileName())
         .arg(context.line)
         .arg(context.function);
 #else
