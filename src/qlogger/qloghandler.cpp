@@ -46,10 +46,12 @@ QLogHandler::~QLogHandler()
     closeFile();
 }
 
-bool QLogHandler::init(const QString &logFilename, int maxFiles, qint64 maxFileSize)
+bool QLogHandler::init(const QString &logFilename, int maxFiles, qint64 maxFileSize, bool enableConsole)
 {
     /* Fill logger basic informations */
     QFileInfo infoPattern(logFilename);
+
+    m_enableConsole = enableConsole;
 
     m_maxFileSize = maxFileSize;
     m_maxFiles = maxFiles;
@@ -182,11 +184,32 @@ void QLogHandler::messageHandler(QtMsgType idType, const QMessageLogContext &con
     QMutexLocker locker(&logHandler.m_mutex);
 
     /* Write to file */
-    logHandler.m_stream << messageFormat(idType, context, msg);
+    const QString fmtMsg = messageFormat(idType, context, msg);
+    logHandler.m_stream << fmtMsg;
 
     /* Do file size is still valid */
     if(!logHandler.sizeFileIsUnderLimit()){
         logHandler.rotateFiles();
+    }
+
+    /* Display log message to console if enable */
+    if(logHandler.m_enableConsole){
+        messageToConsole(idType, fmtMsg);
+    }
+}
+
+void QLogHandler::messageToConsole(QtMsgType idType, const QString &fmtMsg)
+{
+    switch(idType)
+    {
+        case QtDebugMsg:
+        case QtInfoMsg:{
+            QTextStream(stdout) << fmtMsg;
+        }break;
+
+        default:{
+            QTextStream(stderr) << fmtMsg;
+        }break;
     }
 }
 

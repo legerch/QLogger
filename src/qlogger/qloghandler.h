@@ -14,7 +14,7 @@ class QLogHandler
 {
 
 public:
-    bool init(const QString &logFilename, int maxFiles, qint64 maxFileSize);
+    bool init(const QString &logFilename, int maxFiles, qint64 maxFileSize, bool enableConsole);
     void desinit();
 
 public:
@@ -41,6 +41,7 @@ private:
 
 private:
     static void messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg);
+    static void messageToConsole(QtMsgType idType, const QString &fmtMsg);
 
     static QString messageFormat(QtMsgType idType, const QMessageLogContext &context, const QString &msg);
     static QString qtMsgTypeToString(QtMsgType idType);
@@ -50,6 +51,8 @@ private:
     ~QLogHandler();
 
 private:
+    bool m_enableConsole;
+
     qint64 m_maxFileSize;
     int m_maxFiles;
     QString m_fileBasename;
