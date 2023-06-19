@@ -40,6 +40,8 @@ private:
     bool rotateFiles();
     bool renameFile(const QString &oldName, const QString &newName);
 
+    void proceedMessage(QtMsgType idType, const QMessageLogContext &context, const QString &msg);
+
 private:
     static void messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg);
     static void messageToConsole(QtMsgType idType, const QLogMsg &fmtMsg);
@@ -58,6 +60,7 @@ private:
 
     QDir m_currentDir;
     QFile m_currentFile;
+    qsizetype m_currentFileSize;
     QTextStream m_stream;
 
     QMutex m_mutex;

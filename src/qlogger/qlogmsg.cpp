@@ -6,6 +6,7 @@
 QLogMsg::QLogMsg(QtMsgType idType, const QMessageLogContext &context, const QString &msg)
 {
     format(idType, context, msg);
+    calcSizeInBytes();
 }
 
 //TODO: doc (use to manage case for logcontext not complete in release mode if macro is undefined)
@@ -29,6 +30,11 @@ void QLogMsg::format(QtMsgType idType, const QMessageLogContext &context, const 
 #endif
 }
 
+void QLogMsg::calcSizeInBytes()
+{
+    m_sizeBytes = m_msg.toUtf8().size();
+}
+
 QTextStream& operator<<(QTextStream &stream, const QLogMsg &logMsg)
 {
     stream << logMsg.m_msg;
@@ -48,4 +54,14 @@ QString QLogMsg::qtMsgTypeToString(QtMsgType idType)
     };
 
     return MAP_MSG_TYPE_TO_STR.value(idType, "unknown");
+}
+
+const QString& QLogMsg::getString() const
+{
+    return m_msg;
+}
+
+qsizetype QLogMsg::getSizeInBytes() const
+{
+    return m_sizeBytes;
 }

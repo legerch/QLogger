@@ -120,9 +120,11 @@ bool QLogHandler::openFile(const QString &filepath, bool truncate)
     /* Open it and prepare stream */
     bool succeed = m_currentFile.open(openFlags);
     if(!succeed){
+        m_currentFileSize = 0;
         return false;
     }
 
+    m_currentFileSize = m_currentFile.size();
     m_stream.setDevice(&m_currentFile);
 
     return true;
@@ -132,12 +134,13 @@ void QLogHandler::closeFile()
 {
     if(m_currentFile.isOpen()){
         m_currentFile.close();
+        m_currentFileSize = 0;
     }
 }
 
 bool QLogHandler::sizeFileIsUnderLimit() const
 {
-    return m_currentFile.size() < m_maxFileSize;
+    return m_currentFileSize < m_maxFileSize;
 }
 
 bool QLogHandler::rotateFiles()
@@ -178,24 +181,30 @@ bool QLogHandler::renameFile(const QString &oldName, const QString &newName)
     return QFile::rename(oldName, newName);
 }
 
-void QLogHandler::messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg)
+void QLogHandler::proceedMessage(QtMsgType idType, const QMessageLogContext &context, const QString &msg)
 {
-    QLogHandler &logHandler = QLogHandler::instance();
-    QMutexLocker locker(&logHandler.m_mutex);
+    QMutexLocker locker(&m_mutex);
 
     /* Write to file */
     const QLogMsg fmtMsg(idType, context, msg);
-    logHandler.m_stream << fmtMsg;
+    m_stream << fmtMsg;
+    m_currentFileSize += fmtMsg.getSizeInBytes();
 
     /* Do file size is still valid */
-    if(!logHandler.sizeFileIsUnderLimit()){
-        logHandler.rotateFiles();
+    if(!sizeFileIsUnderLimit()){
+        rotateFiles();
     }
 
     /* Display log message to console if enable */
-    if(logHandler.m_enableConsole){
-        messageToConsole(idType, fmtMsg);
+    if(m_enableConsole){
+        QLogHandler::messageToConsole(idType, fmtMsg);
     }
+}
+
+void QLogHandler::messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg)
+{
+    QLogHandler &logHandler = QLogHandler::instance();
+    logHandler.proceedMessage(idType, context, msg);
 }
 
 void QLogHandler::messageToConsole(QtMsgType idType, const QLogMsg &fmtMsg)
