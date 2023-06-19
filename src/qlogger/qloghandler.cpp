@@ -184,7 +184,7 @@ void QLogHandler::messageHandler(QtMsgType idType, const QMessageLogContext &con
     QMutexLocker locker(&logHandler.m_mutex);
 
     /* Write to file */
-    const QString fmtMsg = messageFormat(idType, context, msg);
+    const QLogMsg fmtMsg(idType, context, msg);
     logHandler.m_stream << fmtMsg;
 
     /* Do file size is still valid */
@@ -198,53 +198,21 @@ void QLogHandler::messageHandler(QtMsgType idType, const QMessageLogContext &con
     }
 }
 
-void QLogHandler::messageToConsole(QtMsgType idType, const QString &fmtMsg)
+void QLogHandler::messageToConsole(QtMsgType idType, const QLogMsg &fmtMsg)
 {
     switch(idType)
     {
         case QtDebugMsg:
         case QtInfoMsg:{
-            QTextStream(stdout) << fmtMsg;
+            QTextStream out(stdout);
+            out << fmtMsg;
         }break;
 
         default:{
-            QTextStream(stderr) << fmtMsg;
+            QTextStream out(stderr);
+            out << fmtMsg;
         }break;
     }
-}
-
-//TODO: doc (use to manage case for logcontext not complete in release mode if macro is undefined)
-QString QLogHandler::messageFormat(QtMsgType idType, const QMessageLogContext &context, const QString &msg)
-{
-#if defined(QT_MESSAGELOGCONTEXT)
-    static const QString logPattern = QString("[%1][%2] %3 (%4:%5, %6)\n");
-    return logPattern
-        .arg(QDateTime::currentDateTimeUtc().toString(Qt::ISODate))
-        .arg(qtMsgTypeToString(idType), msg)
-        .arg(QFileInfo(context.file).fileName())
-        .arg(context.line)
-        .arg(context.function);
-#else
-    static const QString logPattern = QString("[%1][%2] %3\n");
-    return logPattern
-        .arg(QDateTime::currentDateTimeUtc().toString(Qt::ISODate))
-        .arg(qtMsgTypeToString(idType), msg);
-#endif
-}
-
-QString QLogHandler::qtMsgTypeToString(QtMsgType idType)
-{
-    static const QMap<QtMsgType, QString> MAP_MSG_TYPE_TO_STR =
-    {
-        {QtDebugMsg, "debug"},
-        {QtInfoMsg, "info"},
-        {QtWarningMsg, "warning"},
-        {QtCriticalMsg, "critical"},
-        {QtFatalMsg, "fatal"},
-        {QtSystemMsg, "system"}
-    };
-
-    return MAP_MSG_TYPE_TO_STR.value(idType, "unknown");
 }
 
 /*****************************/

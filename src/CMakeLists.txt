@@ -46,10 +46,12 @@ set(PROJECT_HEADERS
     qloggerglobal.h
 
     qlogger/qloghandler.h
+    qlogger/qlogmsg.h
 )
 
 set(PROJECT_SOURCES
     qlogger/qloghandler.cpp
+    qlogger/qlogmsg.cpp
 )
 
 set(PROJECT_UI

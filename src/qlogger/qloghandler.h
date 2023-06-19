@@ -2,6 +2,7 @@
 #define QLOGHANDLER
 
 #include "qloggerglobal.h"
+#include "qlogmsg.h"
 
 #include <QDir>
 #include <QMutex>
@@ -41,10 +42,7 @@ private:
 
 private:
     static void messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg);
-    static void messageToConsole(QtMsgType idType, const QString &fmtMsg);
-
-    static QString messageFormat(QtMsgType idType, const QMessageLogContext &context, const QString &msg);
-    static QString qtMsgTypeToString(QtMsgType idType);
+    static void messageToConsole(QtMsgType idType, const QLogMsg &fmtMsg);
 
 private:
     explicit QLogHandler();
