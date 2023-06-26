@@ -157,7 +157,7 @@ bool QLogHandler::rotateFiles()
 
     /* Rotate all files by renaming */
     bool succeed = true;
-    for(int i=m_maxFiles; i>0; --i){
+    for(int i=m_maxFiles -1; i>0; --i){
         const QString src = generateFilepath(i - 1);
 
         if(QFile::exists(src)){
