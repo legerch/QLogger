@@ -35,7 +35,7 @@ private:
     bool openFile(const QString &filepath, bool truncate);
     void closeFile();
 
-    bool sizeFileIsUnderLimit() const;
+    bool sizeFileLimitIsReached(const QLogMsg &logMsg) const;
 
     bool rotateFiles();
     bool renameFile(const QString &oldName, const QString &newName);

@@ -138,9 +138,16 @@ void QLogHandler::closeFile()
     }
 }
 
-bool QLogHandler::sizeFileIsUnderLimit() const
+bool QLogHandler::sizeFileLimitIsReached(const QLogMsg &logMsg) const
 {
-    return m_currentFileSize < m_maxFileSize;
+    const qsizetype nextFileSize = m_currentFileSize + logMsg.getSizeInBytes();
+
+    /* Do log file limit is reached ? */
+    if(nextFileSize > m_maxFileSize){
+        return true;
+    }
+
+    return false;
 }
 
 bool QLogHandler::rotateFiles()
@@ -185,20 +192,22 @@ void QLogHandler::proceedMessage(QtMsgType idType, const QMessageLogContext &con
 {
     QMutexLocker locker(&m_mutex);
 
-    /* Write to file */
+    /* Prepare log message */
     const QLogMsg fmtMsg(idType, context, msg);
-    m_stream << fmtMsg;
-    m_currentFileSize += fmtMsg.getSizeInBytes();
 
-    /* Do file size is still valid */
-    if(!sizeFileIsUnderLimit()){
+    /* Do file can contains this message ? */
+    if(sizeFileLimitIsReached(fmtMsg)){
         rotateFiles();
     }
 
-    /* Display log message to console if enable */
+    /* Log message */
+    m_stream << fmtMsg;
     if(m_enableConsole){
         QLogHandler::messageToConsole(idType, fmtMsg);
     }
+
+    /* Update current file size */
+    m_currentFileSize += fmtMsg.getSizeInBytes();
 }
 
 void QLogHandler::messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg)
