@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QString>
 
+namespace QLogger{
+
 class QLogMsg
 {
 
@@ -28,5 +30,7 @@ private:
     QString m_msg;
     qsizetype m_sizeBytes;
 };
+
+} // Namespace QLogger
 
 #endif // QLOGMSG_H
