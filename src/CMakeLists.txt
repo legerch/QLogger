@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 
 # Set project properties
 set(PROJECT_NAME qlogger)
-set(PROJECT_VERSION_SEMANTIC 0.0.1)
-set(PROJECT_VERSION_CPP_MIN 17)
+set(PROJECT_VERSION_SEMANTIC 1.0.0)
+set(PROJECT_VERSION_CPP_MIN 11)
 
 # Set project options
 # Options availables for external project start with "EXT_OPT_QLOGGER_XYZ", those options can be use in top CMakeFiles.

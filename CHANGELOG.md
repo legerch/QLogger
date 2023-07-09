@@ -3,8 +3,13 @@
 All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog] and this project adheres to [Semantic Versioning].
 
-## [next] 1.0.0
-First release of `QLogger` which: 
+## [next] - 1.0.1
+
+## [1.0.0] - 2023-07-09
+First release of `QLogger` which allow to:
+- manage log file rotation
+- set size file limit
+- set maximum number of logs files
 
 <!-- Links -->
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
