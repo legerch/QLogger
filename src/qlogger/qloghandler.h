@@ -11,7 +11,7 @@
 namespace QLogger
 {
 
-class QLogHandler
+class QLOGGER_EXPORT QLogHandler
 {
 
 public:
