@@ -64,7 +64,7 @@ QLogHandler::QLogHandler()
  */
 QLogHandler::~QLogHandler()
 {
-    closeFile();
+    desinit();
 }
 
 /*!
@@ -136,6 +136,7 @@ bool QLogHandler::init(const QString &logFilename, int maxFiles, qint64 maxFileS
 void QLogHandler::desinit()
 {
     closeFile();
+    qInstallMessageHandler(0);
 }
 
 /*!
