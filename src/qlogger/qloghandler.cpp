@@ -111,7 +111,7 @@ bool QLogHandler::init(const QString &logFilename, int maxFiles, qint64 maxFileS
     /* Create logs folder if needed */
     m_currentDir = infoPattern.dir();
     if(!m_currentDir.exists()){
-        m_currentDir.mkdir(".");
+        m_currentDir.mkpath(".");
     }
 
     /* Open file log to use */
