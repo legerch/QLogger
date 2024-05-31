@@ -48,6 +48,7 @@ void BaseLogger::setLevel(QtMsgType idType)
 void BaseLogger::writeLog(const QLogMsg &msg)
 {
     proceedEntry(msg);
+    //TODO: manage console
 }
 
 /*****************************/

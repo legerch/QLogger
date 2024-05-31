@@ -50,7 +50,7 @@ FileLogger::FileLogger(const QDir &dir, const QString &extension)
 bool FileLogger::openFile(const QString &basename, bool truncate)
 {
     /* Assign file */
-    const QFileInfo filePath(m_dir, basename + m_extension);
+    const QFileInfo filePath(getFilePath(basename));
     m_file.setFileName(filePath.absoluteFilePath());
 
     /* Set open flags */
