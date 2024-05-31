@@ -54,6 +54,9 @@ set(PROJECT_HEADERS
 
 set(PROJECT_SOURCES
     base/baselogger.cpp
+
+    sinks/filelogger.cpp
+
     qlogger/qloghandler.cpp
     qlogger/qlogmsg.cpp
 )
