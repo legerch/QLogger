@@ -49,6 +49,8 @@ set(PROJECT_HEADERS
     sinks/filelogger.h
     sinks/filerotatinglogger.h
 
+    qloggerfactory.h
+
     qlogger/qloghandler.h
     qlogger/qlogmsg.h
 )
@@ -58,6 +60,8 @@ set(PROJECT_SOURCES
 
     sinks/filelogger.cpp
     sinks/filerotatinglogger.cpp
+
+    qloggerfactory.cpp
 
     qlogger/qloghandler.cpp
     qlogger/qlogmsg.cpp
