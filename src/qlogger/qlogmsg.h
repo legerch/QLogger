@@ -6,6 +6,8 @@
 
 namespace QLogger{
 
+//TODO: renam class
+//TODO: directly use QBytearray for m_msg
 class QLogMsg
 {
 

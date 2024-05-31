@@ -42,14 +42,18 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 # Manage library files
 set(PROJECT_HEADERS
     config.h
-
     qloggerglobal.h
+
+    base/baselogger.h
+
+    sinks/filelogger.h
 
     qlogger/qloghandler.h
     qlogger/qlogmsg.h
 )
 
 set(PROJECT_SOURCES
+    base/baselogger.cpp
     qlogger/qloghandler.cpp
     qlogger/qlogmsg.cpp
 )
