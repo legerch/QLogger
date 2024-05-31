@@ -15,24 +15,50 @@
 
 /**********************************
  * Deprecations warnings
+ *********************************/
+#define QLOGGER_DEPREC              [[deprecated]]          /**< Use to mark a method as deprecated. \n\code{.cpp}QLOGGER_DEPREC void myOldFct(); \endcode */
+#define QLOGGER_DEPREC_X(reason)    [[deprecated(reason)]] 	/**< Use to mark a method as deprecated and specify a reason. \n\code{.cpp}QLOGGER_DEPREC_X("Use myNewFct() instead") void myOldFunc(); \endcode */
+
+/**********************************
+ * Custom macros used to detect custom
+ * built-in functions
  * Sources:
- * - MSVC: https://learn.microsoft.com/en-us/cpp/cpp/deprecated-cpp?redirectedfrom=MSDN&view=msvc-170
- * - GCC: https://gcc.gnu.org/onlinedocs/gcc-4.7.1/gcc/Type-Attributes.html#Type-Attributes
- * - Clang: https://clang.llvm.org/docs/LanguageExtensions.html#messages-on-deprecated-and-unavailable-attributes
+ * - MSVC: No equivalent
+ * - GCC: https://gcc.gnu.org/onlinedocs/gcc-13.2.0/cpp/_005f_005fhas_005fbuiltin.html
+ * - Clang: https://clang.llvm.org/docs/LanguageExtensions.html#has-builtin
  *********************************/
 #if defined(__GNUC__) || defined(__clang__)
-#define QLOGGER_DEPRECATED __attribute__((deprecated))
-#define QLOGGER_DEPRECATED_INFOS(message) __attribute__((deprecated(message)))
-
-#elif defined(_MSC_VER)
-#define QLOGGER_DEPRECATED __declspec(deprecated)
-#define QLOGGER_DEPRECATED_INFOS(message) __declspec(deprecated(message))
-
+#define QLOGGER_BUILTIN(x)  __has_builtin(x)
 #else
-#warning "QLOGGER_DEPRECATED is not implemented for this compiler"
-#warning "QLOGGER_DEPRECATED_INFOS(message) is not implemented for this compiler"
-#define QLOGGER_DEPRECATED
-#define QLOGGER_DEPRECATED_INFOS
+#define QLOGGER_BUILTIN(x)  0
 #endif
+
+/**********************************
+ * Custom macros in order to
+ * not trigger warning on expected
+ * behaviour
+ *********************************/
+#define QLOGGER_FALLTHROUGH  [[fallthrough]]    /**< Indicates that the fall through from the previous case label is intentional and should not be diagnosed by a compiler that warns on fallthrough */
+
+/**********************************
+ * Context informations
+ *********************************/
+#define QLOGGER_FILE            __FILE__
+#define QLOGGER_LINE            __LINE__
+#define QLOGGER_FCTNAME         __func__
+
+#define QLOGGER_FCTSIG          Q_FUNC_INFO
+
+/**********************************
+ * Classes behaviours
+ *********************************/
+#define QLOGGER_DISABLE_COPY(Class) \
+    Q_DISABLE_COPY(Class)
+
+#define QLOGGER_DISABLE_MOVE(Class) \
+    Q_DISABLE_MOVE(Class)
+
+#define QLOGGER_DISABLE_COPY_MOVE(Class) \
+    Q_DISABLE_COPY_MOVE(Class)
 
 #endif // QLOGGER_GLOBAL_H
