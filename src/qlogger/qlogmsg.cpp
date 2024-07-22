@@ -2,6 +2,7 @@
 
 #include <QDate>
 #include <QFileInfo>
+#include <QRegularExpression>
 
 /*****************************/
 /* Class documentations      */
@@ -92,10 +93,18 @@ void QLogMsg::format(QtMsgType idType, const QMessageLogContext &context, const 
 
     /* Do we have context informations ? */
     if(context.file){
+        static const QRegularExpression regex(R"((\w+::)*(\w+)\s*\(.*\))");
+
+        QString fct(context.function);
+        QRegularExpressionMatch match = regex.match(fct);
+        if(match.hasMatch()){
+            fct = match.captured(2);
+        }
+
         m_msg += QString(" (%1:%2, %3)")
             .arg(QFileInfo(context.file).fileName())
             .arg(context.line)
-            .arg(context.function);
+            .arg(fct);
     }
 
     m_msg += '\n';
