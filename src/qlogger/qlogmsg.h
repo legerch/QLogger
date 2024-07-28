@@ -8,6 +8,8 @@ namespace QLogger{
 
 //TODO: renam class
 //TODO: directly use QBytearray for m_msg
+//TODO: we lose multiple infos in this class: context and level, find a way to keep those
+//TODO: allow user to choose own format (either: virtual "format" method, either custom specifiers %d, %H, etc...)
 class QLogMsg
 {
 

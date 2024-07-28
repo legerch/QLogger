@@ -46,6 +46,7 @@ void QLoggerFactory::initLoggerRotating(const QFileInfo &file, int maxFiles, qin
 
 void QLoggerFactory::desinit()
 {
+    //TODO: maybe close used files here ?
     qInstallMessageHandler(0);
 }
 
