@@ -11,6 +11,7 @@ class BaseLogger
 
 public:
     BaseLogger();
+    virtual ~BaseLogger() = default;
 
 public:
     void setLevel(QtMsgType idType);
