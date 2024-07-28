@@ -26,6 +26,7 @@ protected:
 
 protected:
     virtual void proceedEntry(const QLogMsg &msg) override;
+    virtual void flush() override;
 
 protected:
     static bool renameFile(const QString &oldName, const QString &newName);

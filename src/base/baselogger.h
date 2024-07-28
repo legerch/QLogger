@@ -19,6 +19,7 @@ public:
 
 protected:
     virtual void proceedEntry(const QLogMsg &msg) = 0;
+    virtual void flush() = 0;
 
 private:
     QtMsgType m_level = QtDebugMsg;

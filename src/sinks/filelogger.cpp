@@ -101,6 +101,11 @@ void FileLogger::proceedEntry(const QLogMsg &msg)
     m_fileSize = getFileSizeNext(msg);
 }
 
+void FileLogger::flush()
+{
+    m_fileStream.flush();
+}
+
 bool FileLogger::renameFile(const QString &oldName, const QString &newName)
 {
     /* Remove target file is exists */
