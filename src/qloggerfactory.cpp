@@ -61,10 +61,11 @@ void QLoggerFactory::proceedMessage(QtMsgType idType, const QMessageLogContext &
     QMutexLocker locker(&m_mutex);
 
     /* Prepare log message */
-    const QLogMsg fmtMsg(idType, context, msg);
-    m_logger->writeLog(fmtMsg);
+    const LogEntry logEntry(idType, context, msg);
+    const LogBinary logBin = LogFormatter::format(logEntry);
 
-    //TODO: manage log level
+    /* Write log message */
+    m_logger->writeLog(logBin);
 }
 
 void QLoggerFactory::messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg)

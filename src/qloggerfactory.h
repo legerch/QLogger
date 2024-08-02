@@ -3,6 +3,7 @@
 
 #include "qloggerglobal.h"
 #include "base/baselogger.h"
+#include "log/logformatter.h"
 
 #include <memory>
 
@@ -12,7 +13,7 @@
 namespace QLogger
 {
 
-class QLoggerFactory
+class QLoggerFactory final
 {
     QLOGGER_DISABLE_COPY_MOVE(QLoggerFactory)
 
