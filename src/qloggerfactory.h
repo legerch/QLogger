@@ -32,7 +32,6 @@ private:
 
 private:
     QLoggerFactory();
-    ~QLoggerFactory();
 
 private:
     static void messageHandler(QtMsgType idType, const QMessageLogContext &context, const QString &msg);

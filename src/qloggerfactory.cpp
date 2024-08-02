@@ -33,11 +33,6 @@ QLoggerFactory::QLoggerFactory()
     /* Nothing to do */
 }
 
-QLoggerFactory::~QLoggerFactory()
-{
-    desinit();
-}
-
 void QLoggerFactory::initLoggerRotating(const QFileInfo &file, int maxFiles, qint64 maxSize)
 {
     m_logger = std::make_unique<FileRotatingLogger>(file, maxFiles, maxSize);
@@ -46,7 +41,7 @@ void QLoggerFactory::initLoggerRotating(const QFileInfo &file, int maxFiles, qin
 
 void QLoggerFactory::desinit()
 {
-    //TODO: maybe close used files here ?
+    m_logger.reset();
     qInstallMessageHandler(0);
 }
 
