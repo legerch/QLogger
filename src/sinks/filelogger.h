@@ -13,7 +13,7 @@ class FileLogger : public BaseLogger
 {
 
 public:
-    FileLogger(const QDir &dir, const QString &extension);
+    FileLogger(const QDir &dir, const QString &extension, bool enableConsole);
 
 protected:
     bool openFile(const QString &basename, bool truncate);

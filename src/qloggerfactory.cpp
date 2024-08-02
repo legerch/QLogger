@@ -33,9 +33,9 @@ QLoggerFactory::QLoggerFactory()
     /* Nothing to do */
 }
 
-void QLoggerFactory::initLoggerRotating(const QFileInfo &file, int maxFiles, qint64 maxSize)
+void QLoggerFactory::initLoggerRotating(const QFileInfo &file, int maxFiles, qint64 maxSize, bool enableConsole)
 {
-    m_logger = std::make_unique<FileRotatingLogger>(file, maxFiles, maxSize);
+    m_logger = std::make_unique<FileRotatingLogger>(file, maxFiles, maxSize, enableConsole);
     initGeneric();
 }
 

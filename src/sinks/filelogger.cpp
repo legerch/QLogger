@@ -35,7 +35,8 @@ namespace QLogger{
 /*         Class             */
 /*****************************/
 
-FileLogger::FileLogger(const QDir &dir, const QString &extension)
+FileLogger::FileLogger(const QDir &dir, const QString &extension, bool enableConsole)
+    : BaseLogger(enableConsole)
 {
     /* Set properties */
     m_dir = dir;

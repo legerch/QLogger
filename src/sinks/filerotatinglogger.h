@@ -10,7 +10,7 @@ class FileRotatingLogger : public FileLogger
 {
 
 public:
-    FileRotatingLogger(const QFileInfo &file, int maxFiles, qint64 maxSize);
+    FileRotatingLogger(const QFileInfo &file, int maxFiles, qint64 maxSize, bool enableConsole);
 
 protected:
     virtual void write(const LogBinary &log) override;

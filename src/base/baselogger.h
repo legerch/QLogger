@@ -10,7 +10,7 @@ class BaseLogger
 {
 
 public:
-    BaseLogger();
+    BaseLogger(bool enableConsole);
     virtual ~BaseLogger() = default;
 
 public:
@@ -22,7 +22,11 @@ protected:
     virtual void flush() = 0;
 
 private:
+    void printToConsole(const LogBinary &log);
+
+private:
     QtMsgType m_level = QtDebugMsg;
+    bool m_enableConsole;
 };
 
 } // Namespace QLogger

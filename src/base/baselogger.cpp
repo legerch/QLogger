@@ -35,9 +35,9 @@ namespace QLogger{
 /*         Class             */
 /*****************************/
 
-BaseLogger::BaseLogger()
+BaseLogger::BaseLogger(bool enableConsole)
 {
-    /* Nothing to do */
+    m_enableConsole = enableConsole;
 }
 
 void BaseLogger::setLevel(QtMsgType idType)
@@ -56,9 +56,27 @@ void BaseLogger::writeLog(const LogBinary &log)
     write(log);
     flush();
 
-    //TODO: manage console
-    QTextStream out(stderr);
-    out << log;
+    /* Print to console if needed */
+    if(m_enableConsole){
+        printToConsole(log);
+    }
+}
+
+void BaseLogger::printToConsole(const LogBinary &log)
+{
+    switch(log.getType())
+    {
+        case QtDebugMsg:
+        case QtInfoMsg:{
+            QTextStream out(stdout);
+            out << log;
+        }break;
+
+        default:{
+            QTextStream out(stderr);
+            out << log;
+        }break;
+    }
 }
 
 /*****************************/
