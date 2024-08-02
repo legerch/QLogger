@@ -84,7 +84,7 @@ QString LogFormatter::defaultFormatter(const LogEntry &log)
         fmt += QString(" (%1:%2, %3)")
                    .arg(log.getCtxFile().fileName())
                    .arg(log.getCtxLine())
-                   .arg(log.getCtxFctSig());
+                   .arg(log.getCtxFctName());
     }
 
     /* Terminate log line */
