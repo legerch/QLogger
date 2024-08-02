@@ -89,9 +89,68 @@ This will log:
 [2023-07-09T13:36:09Z][debug] String [nine] converted as number is [9] (mainwindow.cpp:15, MainWindow::MainWindow(QWidget*))
 ```
 
+//TODO: details new sinks features
+//TODO: details new formtter feature
+//TODO: details new log level feature
+//TODO: update CHANGELOG
 new:
 [2024-08-02T12:52:37Z][debug] Clicked 3 times (widgetcobradevice.cpp:1741, void CobraDev::WidgetCobraDevice::on_btn_specCmdClientForce_clicked())
 [2024-08-02T12:58:04Z][debug] Clicked 0 times (widgetcobradevice.cpp:1741, on_btn_specCmdClientForce_clicked)
+
+```cpp
+#include "qlogger/qloggerfactory.h"
+
+/*****************************/
+/* Macro definitions         */
+/*****************************/
+#define APP_LOG_FILE            "logs/log.txt"
+#define APP_LOG_NB_FILES        3
+#define APP_LOG_SIZE            (1024 * 1024 * 5) // Equals 5 megabytes (Mb)
+#define APP_LOG_ENABLE_CONSOLE  true
+
+/*****************************/
+/* Custom log formatter      */
+/*****************************/
+QString logFormatter(const QLogger::LogEntry &log)
+{
+    QString fmt = QString("[%1][%2] %3").arg(
+        QDateTime::currentDateTimeUtc().toString(Qt::ISODate),
+        log.getTypeString(),
+        log.getMsg()
+    );
+
+    /* Can we add context informations ? */
+    if(log.contextIsAvailable()){
+        fmt += QString(" (%1:%2, %3)")
+                   .arg(log.getCtxFile().fileName())
+                   .arg(log.getCtxLine())
+                   .arg(log.getCtxFctName());
+    }
+
+    /* Terminate log line */
+    fmt += '\n';
+
+    return fmt;
+}
+
+/*****************************/
+/* Main method               */
+/*****************************/
+int main(int argc, char *argv[])
+{
+    /* Set logs */
+    QLogger::LogFormatter::setCustomFormat(logFormatter);
+    QLogger::QLoggerFactory::instance().initLoggerRotating(QFileInfo(APP_LOG_FILE), APP_LOG_NB_FILES, APP_LOG_SIZE);
+
+    /* Manage application properties */
+    QApplication app(argc, argv);
+
+    MainWindow window;
+    window.show();
+
+    return app.exec();
+}
+```
 
 # 4. Documentation
 
