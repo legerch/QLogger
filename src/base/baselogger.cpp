@@ -45,16 +45,16 @@ void BaseLogger::setLevel(QtMsgType idType)
     m_level = idType;
 }
 
-void BaseLogger::writeLog(const QLogMsg &msg)
+void BaseLogger::writeLog(const LogBinary &log)
 {
     //TODO: manage log level
 
-    proceedEntry(msg);
+    write(log);
     flush();
 
     //TODO: manage console
     QTextStream out(stderr);
-    out << msg;
+    out << log;
 }
 
 /*****************************/

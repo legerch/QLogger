@@ -1,7 +1,7 @@
 #ifndef BASELOGGER_H
 #define BASELOGGER_H
 
-#include "qlogger/qlogmsg.h"
+#include "log/logbinary.h"
 
 namespace QLogger
 {
@@ -15,10 +15,10 @@ public:
 
 public:
     void setLevel(QtMsgType idType);
-    void writeLog(const QLogMsg &msg);
+    void writeLog(const LogBinary &log);
 
 protected:
-    virtual void proceedEntry(const QLogMsg &msg) = 0;
+    virtual void write(const LogBinary &log) = 0;
     virtual void flush() = 0;
 
 private:

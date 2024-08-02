@@ -90,15 +90,15 @@ qsizetype FileLogger::getFileSize() const
     return m_fileSize;
 }
 
-qsizetype FileLogger::getFileSizeNext(const QLogMsg &msg) const
+qsizetype FileLogger::getFileSizeNext(const LogBinary &log) const
 {
-    return m_fileSize + msg.getSizeInBytes();
+    return m_fileSize + log.getSizeBytes();
 }
 
-void FileLogger::proceedEntry(const QLogMsg &msg)
+void FileLogger::write(const LogBinary &log)
 {
-    m_fileStream << msg;
-    m_fileSize = getFileSizeNext(msg);
+    m_fileStream << log;
+    m_fileSize = getFileSizeNext(log);
 }
 
 void FileLogger::flush()

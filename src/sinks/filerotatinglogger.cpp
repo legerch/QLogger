@@ -48,15 +48,15 @@ FileRotatingLogger::FileRotatingLogger(const QFileInfo &file, int maxFiles, qint
     openFile(generateBasename(0), false);
 }
 
-void FileRotatingLogger::proceedEntry(const QLogMsg &msg)
+void FileRotatingLogger::write(const LogBinary &log)
 {
     /* Do file can contains this message ? */
-    if(getFileSizeNext(msg) > m_maxFileSize){
+    if(getFileSizeNext(log) > m_maxFileSize){
         rotateFiles();
     }
 
     /* Write log message */
-    FileLogger::proceedEntry(msg);
+    FileLogger::write(log);
 }
 
 bool FileRotatingLogger::rotateFiles()

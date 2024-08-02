@@ -22,10 +22,10 @@ protected:
 protected:
     QString getFilePath(const QString &basename) const;
     qsizetype getFileSize() const;
-    qsizetype getFileSizeNext(const QLogMsg &msg) const;
+    qsizetype getFileSizeNext(const LogBinary &log) const;
 
 protected:
-    virtual void proceedEntry(const QLogMsg &msg) override;
+    virtual void write(const LogBinary &log) override;
     virtual void flush() override;
 
 protected:

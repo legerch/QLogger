@@ -13,7 +13,7 @@ public:
     FileRotatingLogger(const QFileInfo &file, int maxFiles, qint64 maxSize);
 
 protected:
-    virtual void proceedEntry(const QLogMsg &msg) override;
+    virtual void write(const LogBinary &log) override;
 
 private:
     bool rotateFiles();

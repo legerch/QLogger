@@ -46,6 +46,10 @@ set(PROJECT_HEADERS
 
     base/baselogger.h
 
+    log/logbinary.h
+    log/logentry.h
+    log/logformatter.h
+
     sinks/filelogger.h
     sinks/filerotatinglogger.h
 
@@ -57,6 +61,10 @@ set(PROJECT_HEADERS
 
 set(PROJECT_SOURCES
     base/baselogger.cpp
+
+    log/logbinary.cpp
+    log/logentry.cpp
+    log/logformatter.cpp
 
     sinks/filelogger.cpp
     sinks/filerotatinglogger.cpp
