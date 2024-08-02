@@ -45,6 +45,12 @@ void QLoggerFactory::desinit()
     qInstallMessageHandler(0);
 }
 
+void QLoggerFactory::setLevel(QtMsgType idType)
+{
+    QMutexLocker locker(&m_mutex);
+    m_logger->setLevel(idType);
+}
+
 QLoggerFactory &QLoggerFactory::instance()
 {
     static QLoggerFactory instance;

@@ -47,8 +47,12 @@ void BaseLogger::setLevel(QtMsgType idType)
 
 void BaseLogger::writeLog(const LogBinary &log)
 {
-    //TODO: manage log level
+    /* Do minimum level of log is reached ? */
+    if(log.getType() < m_level){
+        return;
+    }
 
+    /* Write logs */
     write(log);
     flush();
 

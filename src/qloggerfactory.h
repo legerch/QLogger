@@ -25,6 +25,9 @@ public:
     void desinit();
 
 public:
+    void setLevel(QtMsgType idType);
+
+public:
     static QLoggerFactory &instance();
 
 private:
