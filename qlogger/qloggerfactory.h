@@ -13,7 +13,7 @@
 namespace QLogger
 {
 
-class QLoggerFactory final
+class QLOGGER_EXPORT QLoggerFactory final
 {
     QLOGGER_DISABLE_COPY_MOVE(QLoggerFactory)
 

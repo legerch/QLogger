@@ -1,13 +1,15 @@
 #ifndef QLOGGER_LOGENTRY_H
 #define QLOGGER_LOGENTRY_H
 
+#include "qlogger/qloggerglobal.h"
+
 #include <QFileInfo>
 #include <QMessageLogContext>
 
 namespace QLogger
 {
 
-class LogEntry
+class QLOGGER_EXPORT LogEntry
 {
 
 public:

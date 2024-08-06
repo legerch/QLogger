@@ -7,7 +7,7 @@
 namespace QLogger
 {
 
-class LogFormatter
+class QLOGGER_EXPORT LogFormatter
 {
 
 public:

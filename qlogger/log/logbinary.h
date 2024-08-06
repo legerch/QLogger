@@ -1,13 +1,15 @@
 #ifndef QLOGGER_LOGBINARY_H
 #define QLOGGER_LOGBINARY_H
 
+#include "qlogger/qloggerglobal.h"
+
 #include <QByteArray>
 #include <QTextStream>
 
 namespace QLogger
 {
 
-class LogBinary
+class QLOGGER_EXPORT LogBinary
 {
 
 public:
