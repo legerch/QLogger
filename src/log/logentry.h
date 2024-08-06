@@ -1,5 +1,5 @@
-#ifndef LOGENTRY_H
-#define LOGENTRY_H
+#ifndef QLOGGER_LOGENTRY_H
+#define QLOGGER_LOGENTRY_H
 
 #include <QFileInfo>
 #include <QMessageLogContext>
@@ -37,4 +37,4 @@ private:
 
 } // Namespace QLogger
 
-#endif // LOGENTRY_H
+#endif // QLOGGER_LOGENTRY_H

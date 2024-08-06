@@ -1,5 +1,5 @@
-#ifndef FILELOGGER_H
-#define FILELOGGER_H
+#ifndef QLOGGER_FILELOGGER_H
+#define QLOGGER_FILELOGGER_H
 
 #include "base/baselogger.h"
 
@@ -42,4 +42,4 @@ private:
 
 } // Namespace QLogger
 
-#endif // FILELOGGER_H
+#endif // QLOGGER_FILELOGGER_H

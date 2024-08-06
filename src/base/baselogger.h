@@ -1,5 +1,5 @@
-#ifndef BASELOGGER_H
-#define BASELOGGER_H
+#ifndef QLOGGER_BASELOGGER_H
+#define QLOGGER_BASELOGGER_H
 
 #include "log/logbinary.h"
 
@@ -31,4 +31,4 @@ private:
 
 } // Namespace QLogger
 
-#endif // BASELOGGER_H
+#endif // QLOGGER_BASELOGGER_H

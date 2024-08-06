@@ -1,5 +1,5 @@
-#ifndef QLOGGERFACTORY_H
-#define QLOGGERFACTORY_H
+#ifndef QLOGGER_QLOGGERFACTORY_H
+#define QLOGGER_QLOGGERFACTORY_H
 
 #include "qloggerglobal.h"
 #include "base/baselogger.h"
@@ -47,4 +47,4 @@ private:
 
 } // namespace QLogger
 
-#endif // QLOGGERFACTORY_H
+#endif // QLOGGER_QLOGGERFACTORY_H

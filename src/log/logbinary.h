@@ -1,5 +1,5 @@
-#ifndef LOGBINARY_H
-#define LOGBINARY_H
+#ifndef QLOGGER_LOGBINARY_H
+#define QLOGGER_LOGBINARY_H
 
 #include <QByteArray>
 #include <QTextStream>
@@ -29,4 +29,4 @@ private:
 
 } // Namespace QLogger
 
-#endif // LOGBINARY_H
+#endif // QLOGGER_LOGBINARY_H

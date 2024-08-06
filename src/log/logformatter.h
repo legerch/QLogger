@@ -1,5 +1,5 @@
-#ifndef LOGFORMATTER_H
-#define LOGFORMATTER_H
+#ifndef QLOGGER_LOGFORMATTER_H
+#define QLOGGER_LOGFORMATTER_H
 
 #include "logentry.h"
 #include "logbinary.h"
@@ -26,4 +26,4 @@ private:
 
 } // Namespace QLogger
 
-#endif // LOGFORMATTER_H
+#endif // QLOGGER_LOGFORMATTER_H

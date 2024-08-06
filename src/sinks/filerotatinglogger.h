@@ -1,5 +1,5 @@
-#ifndef FILEROTATINGLOGGER_H
-#define FILEROTATINGLOGGER_H
+#ifndef QLOGGER_FILEROTATINGLOGGER_H
+#define QLOGGER_FILEROTATINGLOGGER_H
 
 #include "filelogger.h"
 
@@ -31,4 +31,4 @@ private:
 
 } // Namespace QLogger
 
-#endif // FILEROTATINGLOGGER_H
+#endif // QLOGGER_FILEROTATINGLOGGER_H
