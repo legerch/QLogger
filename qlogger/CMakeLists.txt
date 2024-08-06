@@ -117,4 +117,5 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE QLOGGER_LIB)
 # endif()
 
 # Directories to includes
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+cmake_path(GET CMAKE_CURRENT_SOURCE_DIR PARENT_PATH PROJECT_ROOT_DIR)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_ROOT_DIR})
