@@ -3,7 +3,12 @@
 All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog] and this project adheres to [Semantic Versioning].
 
-## [next] - 1.0.3
+## [next] - 2.0.0
+### Added
+- Add support for multiples sinks, allowing to choose behaviour of the logger. Current sinks available are:
+  - File rotating logs
+- Allow to use custom formatter via `QLogger::LogFormatter`
+- Add support for log level: user can now set a minimum level
 
 ## [1.0.2] - 2024-08-02
 ### Fixed

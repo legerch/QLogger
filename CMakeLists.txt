@@ -15,4 +15,4 @@ if(NOT PROJECT_BUILD_OUTPUT)
 endif()
 
 # Run subdirectory routine
-add_subdirectory(src)
+add_subdirectory(qlogger)

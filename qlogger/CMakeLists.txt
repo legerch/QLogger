@@ -42,16 +42,31 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 # Manage library files
 set(PROJECT_HEADERS
     config.h
-
     qloggerglobal.h
 
-    qlogger/qloghandler.h
-    qlogger/qlogmsg.h
+    base/baselogger.h
+
+    log/logbinary.h
+    log/logentry.h
+    log/logformatter.h
+
+    sinks/filelogger.h
+    sinks/filerotatinglogger.h
+
+    qloggerfactory.h
 )
 
 set(PROJECT_SOURCES
-    qlogger/qloghandler.cpp
-    qlogger/qlogmsg.cpp
+    base/baselogger.cpp
+
+    log/logbinary.cpp
+    log/logentry.cpp
+    log/logformatter.cpp
+
+    sinks/filelogger.cpp
+    sinks/filerotatinglogger.cpp
+
+    qloggerfactory.cpp
 )
 
 set(PROJECT_UI
@@ -102,4 +117,5 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE QLOGGER_LIB)
 # endif()
 
 # Directories to includes
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+cmake_path(GET CMAKE_CURRENT_SOURCE_DIR PARENT_PATH PROJECT_ROOT_DIR)
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_ROOT_DIR})
