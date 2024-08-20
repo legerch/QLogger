@@ -25,8 +25,11 @@ private:
     void printToConsole(const LogBinary &log);
 
 private:
-    QtMsgType m_level = QtDebugMsg;
+    int m_minPriority = 0;
     bool m_enableConsole;
+
+private:
+    static const QHash<QtMsgType, int> MAP_LEVEL_PRIORITY;
 };
 
 } // Namespace QLogger

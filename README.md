@@ -157,8 +157,9 @@ int main(int argc, char *argv[])
 
 User can also configure whether or not all messages should be logged. By default, all messages are logged but that can be changed by choosing minimum level to use (see [Qt log level enum doc][doc-qt-log-level]):
 ```cpp
-QLogger::QLoggerFactory::instance().setLevel(QtCriticalMsg);
+QLogger::QLoggerFactory::instance().setLevel(QtWarningMsg);
 ```
+> This example will set logger to only manage message of level: `QtWarningMsg`, `QtCriticalMsg` and `QtFatalMsg`
 
 # 4. Documentation
 

@@ -6,6 +6,19 @@
 /* Class documentations      */
 /*****************************/
 
+/*!
+ * \class QLogger::QLoggerFactory
+ * \brief Use to manage logs
+ * \details
+ * This class will allow to configure and manage
+ * logs messages. \n
+ * Multiple sinks are available:
+ * - File rotating logger: \c initLoggerRotating()
+ *
+ * \sa initLoggerRotating()
+ * \sa instance()
+ */
+
 /*****************************/
 /* Enum documentations       */
 /*****************************/
@@ -66,18 +79,42 @@ void QLoggerFactory::initLoggerRotating(const QFileInfo &file, int maxFiles, qin
     initGeneric();
 }
 
+/*!
+ * \brief Use to release and close all used
+ * ressources
+ * \details
+ * This method will close all used ressources and restore
+ * default log behaviour.
+ */
 void QLoggerFactory::desinit()
 {
     m_logger.reset();
     qInstallMessageHandler(0);
 }
 
+/*!
+ * \brief Use to set minimum log level to use
+ * \details
+ * Please refer to \c BaseLogger::setLevel for more
+ * details
+ *
+ * \param[in] idType
+ * Minimum log level to use
+ */
 void QLoggerFactory::setLevel(QtMsgType idType)
 {
     QMutexLocker locker(&m_mutex);
     m_logger->setLevel(idType);
 }
 
+/*!
+ * \brief Use to get current unique instance
+ * of QLoggerFactory
+ *
+ * \return
+ * Return current unique instance
+ * of QLoggerFactory
+ */
 QLoggerFactory &QLoggerFactory::instance()
 {
     static QLoggerFactory instance;
