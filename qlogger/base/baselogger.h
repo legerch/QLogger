@@ -1,7 +1,7 @@
 #ifndef QLOGGER_BASELOGGER_H
 #define QLOGGER_BASELOGGER_H
 
-#include "log/logbinary.h"
+#include "qlogger/log/logbinary.h"
 
 namespace QLogger
 {
