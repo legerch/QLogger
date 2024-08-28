@@ -2,6 +2,8 @@
 
 **Table of contents:**
 - [1. Requirements](#1-requirements)
+  - [1.1. C++ Standards](#11-c-standards)
+  - [1.2. Dependencies](#12-dependencies)
 - [2. How to build](#2-how-to-build)
 - [3. How to use](#3-how-to-use)
   - [3.1. Initialization](#31-initialization)
@@ -17,8 +19,17 @@
 - [7. Ressources](#7-ressources)
 
 # 1. Requirements
+## 1.1. C++ Standards
 
-- **C++11** compiler (see [implementation section][anchor-implementation] for more details)
+This library requires at least **C++ 11** standard (see [implementation section][anchor-implementation] for more details)
+
+## 1.2. Dependencies
+
+Below, list of required dependencies:
+
+| Dependencies | Comments |
+|:-:|:-:|
+| [Qt][qt-official] | Library built with **Qt framework** and compatible with series `5.15.x` and `6.x` |
 
 # 2. How to build
 
@@ -141,7 +152,7 @@ int main(int argc, char *argv[])
 {
     /* Set logs */
     QLogger::LogFormatter::setCustomFormat(logFormatter);
-    QLogger::QLoggerFactory::instance().initLoggerRotating(QFileInfo(APP_LOG_FILE), APP_LOG_NB_FILES, APP_LOG_SIZE);
+    QLogger::QLoggerFactory::instance().initLoggerRotating(QFileInfo(APP_LOG_FILE), APP_LOG_NB_FILES, APP_LOG_SIZE, APP_LOG_ENABLE_CONSOLE);
 
     /* Manage application properties */
     QApplication app(argc, argv);
@@ -240,3 +251,5 @@ This library is licensed under [MIT license][repo-license].
 [log-lib-easyloggingcpp]: https://github.com/abumq/easyloggingpp
 [log-lib-log4cplus]: https://github.com/log4cplus/log4cplus
 [log-lib-loguru]: https://github.com/emilk/loguru
+
+[qt-official]: https://www.qt.io/
