@@ -21,6 +21,9 @@ public:
     void setLevel(QtMsgType idType);
     void writeLog(const LogBinary &log);
 
+public:
+    virtual void start() = 0;
+
 protected:
     virtual void write(const LogBinary &log) = 0;
     virtual void flush() = 0;

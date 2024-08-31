@@ -123,6 +123,7 @@ QLoggerFactory &QLoggerFactory::instance()
 
 void QLoggerFactory::initGeneric()
 {
+    m_logger->start();
     qInstallMessageHandler(messageHandler);
 }
 

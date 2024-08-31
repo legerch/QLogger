@@ -41,9 +41,6 @@ FileRotatingLogger::FileRotatingLogger(const QFileInfo &file, int maxFiles, qint
     /* Set properties */
     m_maxFileNb = maxFiles;
     m_maxFileSize = maxSize;
-
-    /* Open log file to use */
-    openFile(generateFmtBasename(0), false);
 }
 
 QString FileRotatingLogger::generateFmtBasename(const QVariant &arg) const
@@ -64,6 +61,12 @@ QString FileRotatingLogger::generateFmtBasename(const QVariant &arg) const
 
     /* Build basename by using index */
     return fmtBasename.append(QString::number(indexFile));
+}
+
+void FileRotatingLogger::start()
+{
+    /* Open log file to use */
+    openFile(generateFmtBasename(0), false);
 }
 
 void FileRotatingLogger::write(const LogBinary &log)

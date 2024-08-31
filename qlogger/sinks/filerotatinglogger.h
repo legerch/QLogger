@@ -15,6 +15,9 @@ public:
 
 protected:
     virtual QString generateFmtBasename(const QVariant &arg) const override;
+
+protected:
+    virtual void start() override;
     virtual void write(const LogBinary &log) override;
 
 private:
