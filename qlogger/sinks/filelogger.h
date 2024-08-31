@@ -11,9 +11,10 @@ namespace QLogger
 
 class FileLogger : public BaseLogger
 {
+    Q_OBJECT
 
 public:
-    FileLogger(const QDir &dir, const QString &extension, bool enableConsole);
+    FileLogger(const QDir &dir, const QString &extension, bool enableConsole, QObject *parent = nullptr);
 
 protected:
     bool openFile(const QString &basename, bool truncate);

@@ -35,8 +35,8 @@ namespace QLogger{
 /*         Class             */
 /*****************************/
 
-FileRotatingLogger::FileRotatingLogger(const QFileInfo &file, int maxFiles, qint64 maxSize, bool enableConsole)
-    : FileLogger(file.absoluteDir(), file.suffix(), enableConsole)
+FileRotatingLogger::FileRotatingLogger(const QFileInfo &file, int maxFiles, qint64 maxSize, bool enableConsole, QObject *parent)
+    : FileLogger(file.absoluteDir(), file.suffix(), enableConsole, parent)
 {
     /* Set properties */
     m_fileBasename = file.baseName();

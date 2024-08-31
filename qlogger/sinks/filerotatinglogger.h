@@ -8,9 +8,10 @@ namespace QLogger
 
 class FileRotatingLogger : public FileLogger
 {
+    Q_OBJECT
 
 public:
-    FileRotatingLogger(const QFileInfo &file, int maxFiles, qint64 maxSize, bool enableConsole);
+    FileRotatingLogger(const QFileInfo &file, int maxFiles, qint64 maxSize, bool enableConsole, QObject *parent = nullptr);
 
 protected:
     virtual void write(const LogBinary &log) override;

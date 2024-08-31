@@ -43,7 +43,8 @@ const QHash<QtMsgType, int> BaseLogger::MAP_LEVEL_PRIORITY =
 /*         Class             */
 /*****************************/
 
-BaseLogger::BaseLogger(bool enableConsole)
+BaseLogger::BaseLogger(bool enableConsole, QObject *parent)
+    : QObject(parent)
 {
     m_enableConsole = enableConsole;
 }

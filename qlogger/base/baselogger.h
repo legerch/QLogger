@@ -2,17 +2,19 @@
 #define QLOGGER_BASELOGGER_H
 
 #include <QHash>
+#include <QObject>
 
 #include "qlogger/log/logbinary.h"
 
 namespace QLogger
 {
 
-class BaseLogger
+class BaseLogger : public QObject
 {
+    Q_OBJECT
 
 public:
-    BaseLogger(bool enableConsole);
+    BaseLogger(bool enableConsole, QObject *parent = nullptr);
     virtual ~BaseLogger() = default;
 
 public:
