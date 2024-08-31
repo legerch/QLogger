@@ -35,12 +35,13 @@ namespace QLogger{
 /*         Class             */
 /*****************************/
 
-FileLogger::FileLogger(const QDir &dir, const QString &extension, bool enableConsole, QObject *parent)
+FileLogger::FileLogger(const QFileInfo &filepath, bool enableConsole, QObject *parent)
     : BaseLogger(enableConsole, parent)
 {
     /* Set properties */
-    m_dir = dir;
-    m_extension = extension;
+    m_dir = filepath.absoluteDir();
+    m_basename = filepath.baseName();
+    m_extension = filepath.suffix();
 
     /* Create directory if needed */
     if(!m_dir.exists()){
@@ -48,10 +49,10 @@ FileLogger::FileLogger(const QDir &dir, const QString &extension, bool enableCon
     }
 }
 
-bool FileLogger::openFile(const QString &basename, bool truncate)
+bool FileLogger::openFile(const QVariant &argBasename, bool truncate)
 {
     /* Assign file */
-    const QFileInfo filePath(getFilePath(basename));
+    const QFileInfo filePath(generateFilePath(argBasename));
     m_file.setFileName(filePath.absoluteFilePath());
 
     /* Set open flags */
@@ -81,9 +82,9 @@ void FileLogger::closeFile()
     m_fileSize = 0;
 }
 
-QString FileLogger::getFilePath(const QString &basename) const
+const QString& FileLogger::getBasename() const
 {
-    return m_dir.absoluteFilePath(basename + '.' + m_extension);
+    return m_basename;
 }
 
 qsizetype FileLogger::getFileSize() const
@@ -94,6 +95,11 @@ qsizetype FileLogger::getFileSize() const
 qsizetype FileLogger::getFileSizeNext(const LogBinary &log) const
 {
     return m_fileSize + log.getSizeBytes();
+}
+
+QString FileLogger::generateFilePath(const QVariant &argBasename) const
+{
+    return m_dir.absoluteFilePath(generateFmtBasename(argBasename) + '.' + m_extension);
 }
 
 void FileLogger::write(const LogBinary &log)

@@ -14,16 +14,21 @@ class FileLogger : public BaseLogger
     Q_OBJECT
 
 public:
-    FileLogger(const QDir &dir, const QString &extension, bool enableConsole, QObject *parent = nullptr);
+    FileLogger(const QFileInfo &filepath, bool enableConsole, QObject *parent = nullptr);
 
 protected:
-    bool openFile(const QString &basename, bool truncate);
+    bool openFile(const QVariant &argBasename, bool truncate);
     void closeFile();
 
 protected:
-    QString getFilePath(const QString &basename) const;
+    const QString& getBasename() const;
     qsizetype getFileSize() const;
     qsizetype getFileSizeNext(const LogBinary &log) const;
+
+    QString generateFilePath(const QVariant &argBasename) const;
+
+protected:
+    virtual QString generateFmtBasename(const QVariant &arg) const = 0;
 
 protected:
     virtual void write(const LogBinary &log) override;
@@ -34,6 +39,7 @@ protected:
 
 private:
     QDir m_dir;
+    QString m_basename;
     QString m_extension;
 
     QFile m_file;

@@ -36,16 +36,34 @@ namespace QLogger{
 /*****************************/
 
 FileRotatingLogger::FileRotatingLogger(const QFileInfo &file, int maxFiles, qint64 maxSize, bool enableConsole, QObject *parent)
-    : FileLogger(file.absoluteDir(), file.suffix(), enableConsole, parent)
+    : FileLogger(file, enableConsole, parent)
 {
     /* Set properties */
-    m_fileBasename = file.baseName();
-
     m_maxFileNb = maxFiles;
     m_maxFileSize = maxSize;
 
     /* Open log file to use */
-    openFile(generateBasename(0), false);
+    openFile(generateFmtBasename(0), false);
+}
+
+QString FileRotatingLogger::generateFmtBasename(const QVariant &arg) const
+{
+    QString fmtBasename = getBasename();
+
+    /* Convert arg to integer */
+    bool succeed = false;
+    const int indexFile = arg.toInt(&succeed);
+    if(!succeed){
+        return fmtBasename;
+    }
+
+    /* Index is base file ? */
+    if(indexFile == 0){
+        return fmtBasename;
+    }
+
+    /* Build basename by using index */
+    return fmtBasename.append(QString::number(indexFile));
 }
 
 void FileRotatingLogger::write(const LogBinary &log)
@@ -67,10 +85,10 @@ bool FileRotatingLogger::rotateFiles()
     /* Rotate all files by renaming */
     bool succeed = true;
     for(int i = m_maxFileNb -1; i > 0; --i){
-        const QString src = generateFilepath(i - 1);
+        const QString src = generateFilePath(i - 1);
 
         if(QFile::exists(src)){
-            const QString target = generateFilepath(i);
+            const QString target = generateFilePath(i);
 
             succeed &= renameFile(src, target);
             if(!succeed){
@@ -80,25 +98,8 @@ bool FileRotatingLogger::rotateFiles()
     }
 
     /* Open base file and truncate any existing data */
-    succeed &= openFile(generateBasename(0), true);
+    succeed &= openFile(generateFmtBasename(0), true);
     return succeed;
-}
-
-QString FileRotatingLogger::generateBasename(int index) const
-{
-    /* Index is base file ? */
-    if(index == 0){
-        return m_fileBasename;
-    }
-
-    /* Build basename by using index */
-    QString basename = m_fileBasename;
-    return basename.append(QString::number(index));
-}
-
-QString FileRotatingLogger::generateFilepath(int index) const
-{
-    return getFilePath(generateBasename(index));
 }
 
 /*****************************/
