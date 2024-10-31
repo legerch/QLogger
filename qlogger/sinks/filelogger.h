@@ -17,7 +17,7 @@ public:
     FileLogger(const QFileInfo &filepath, bool enableConsole, QObject *parent = nullptr);
 
 protected:
-    bool openFile(const QVariant &argBasename, bool truncate);
+    bool openFile(const QString &fmtBasename, bool truncate);
     void closeFile();
 
 protected:
@@ -25,7 +25,8 @@ protected:
     qsizetype getFileSize() const;
     qsizetype getFileSizeNext(const LogBinary &log) const;
 
-    QString generateFilePath(const QVariant &argBasename) const;
+    QString generateFilePathStr(const QString &fmtBasename) const;
+    QString generateFilePathVar(const QVariant &argBasename) const;
 
 protected:
     virtual QString generateFmtBasename(const QVariant &arg) const = 0;

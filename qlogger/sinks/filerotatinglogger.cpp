@@ -88,10 +88,10 @@ bool FileRotatingLogger::rotateFiles()
     /* Rotate all files by renaming */
     bool succeed = true;
     for(int i = m_maxFileNb -1; i > 0; --i){
-        const QString src = generateFilePath(i - 1);
+        const QString src = generateFilePathVar(i - 1);
 
         if(QFile::exists(src)){
-            const QString target = generateFilePath(i);
+            const QString target = generateFilePathVar(i);
 
             succeed &= renameFile(src, target);
             if(!succeed){
