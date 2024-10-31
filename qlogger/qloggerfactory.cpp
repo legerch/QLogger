@@ -1,5 +1,6 @@
 #include "qloggerfactory.h"
 
+#include "sinks/filedailylogger.h"
 #include "sinks/filerotatinglogger.h"
 
 /*****************************/
@@ -13,9 +14,10 @@
  * This class will allow to configure and manage
  * logs messages. \n
  * Multiple sinks are available:
+ * - File daily logger: \c initLoggerDaily()
  * - File rotating logger: \c initLoggerRotating()
  *
- * \sa initLoggerRotating()
+ * \sa initLoggerDaily(), initLoggerRotating()
  * \sa instance()
  */
 
@@ -44,6 +46,13 @@ namespace QLogger{
 QLoggerFactory::QLoggerFactory()
 {
     /* Nothing to do */
+}
+
+//TODO: doc
+void QLoggerFactory::initLoggerDaily(const QFileInfo &file, const QTime &time, bool enableConsole)
+{
+    m_logger = std::make_unique<FileDailyLogger>(file, time, enableConsole);
+    initGeneric();
 }
 
 /*!
