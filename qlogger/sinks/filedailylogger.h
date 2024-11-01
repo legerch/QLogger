@@ -20,9 +20,15 @@ protected:
 
 protected:
     virtual void start() override;
+    virtual void write(const LogBinary &log) override;
+
+private:
+    void rotationProgram();
+    void rotationPerform();
 
 private:
     QTime m_timeDaily;
+    QDateTime m_nextRotation;
 };
 
 } // Namespace QLogger
