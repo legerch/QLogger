@@ -74,7 +74,7 @@ QString FileDailyLogger::generateFmtBasename(const QVariant &arg) const
 
     /* Build basename by adding date information */
     const QString fmtDate = date.toString("yyyy-MM-dd");
-    const QString fmtTime = QString("%1-%2").arg(m_timeDaily.hour()).arg(m_timeDaily.minute());
+    const QString fmtTime = QString("%1-%2").arg(m_timeDaily.hour(), 2, 10, QChar('0')).arg(m_timeDaily.minute(), 2, 10, QChar('0'));
     return fmtBasename.arg(fmtDate, fmtTime);
 }
 
