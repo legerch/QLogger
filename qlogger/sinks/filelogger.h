@@ -21,12 +21,16 @@ protected:
     void closeFile();
 
 protected:
+    const QDir& getDir() const;
     const QString& getBasename() const;
+    const QString& getExtension() const;
     qsizetype getFileSize() const;
     qsizetype getFileSizeNext(const LogBinary &log) const;
 
     QString generateFilePathStr(const QString &fmtBasename) const;
     QString generateFilePathVar(const QVariant &argBasename) const;
+
+    QStringList listFilesEntries(QDir::SortFlags sort) const;
 
 protected:
     virtual QString generateFmtBasename(const QVariant &arg) const = 0;

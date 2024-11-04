@@ -55,11 +55,12 @@ namespace QLogger{
 /*         Class             */
 /*****************************/
 
-FileDailyLogger::FileDailyLogger(const QFileInfo &file, const QTime &time, bool enableConsole, QObject *parent)
+FileDailyLogger::FileDailyLogger(const QFileInfo &file, const QTime &time, uint maxFiles, bool enableConsole, QObject *parent)
     : FileLogger(file, enableConsole, parent)
 {
     /* Set properties */
     m_timeDaily = time;
+    m_nbMaxFiles = maxFiles;
 }
 
 QString FileDailyLogger::generateFmtBasename(const QVariant &arg) const
@@ -113,8 +114,26 @@ void FileDailyLogger::rotationPerform()
     closeFile();
     openFile(generateFmtBasename(QDate::currentDate()), false);
 
+    /* Clean number of log files entries */
+    cleanMaxLogs();
+
     /* Program the next rotation */
     rotationProgram();
+}
+
+void FileDailyLogger::cleanMaxLogs()
+{
+    /* Do we have to perform clean ? */
+    if(m_nbMaxFiles == 0){
+        return;
+    }
+
+    /* Retrieve list of log entries and clean oldest */
+    QStringList listFiles = listFilesEntries(QDir::Name);
+    while(listFiles.size() > m_nbMaxFiles){
+        const QString filePath = getDir().absoluteFilePath(listFiles.takeFirst());
+        QFile::remove(filePath);
+    }
 }
 
 /*****************************/

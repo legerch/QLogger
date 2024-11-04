@@ -21,7 +21,7 @@ private:
     typedef std::unique_ptr<BaseLogger> LoggerPtr;
 
 public:
-    void initLoggerDaily(const QFileInfo &file, const QTime &time, bool enableConsole);
+    void initLoggerDaily(const QFileInfo &file, const QTime &time, uint maxFiles, bool enableConsole);
     void initLoggerRotating(const QFileInfo &file, int maxFiles, qint64 maxSize, bool enableConsole);
     void desinit();
 

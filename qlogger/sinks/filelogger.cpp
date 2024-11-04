@@ -82,9 +82,19 @@ void FileLogger::closeFile()
     m_fileSize = 0;
 }
 
+const QDir &FileLogger::getDir() const
+{
+    return m_dir;
+}
+
 const QString& FileLogger::getBasename() const
 {
     return m_basename;
+}
+
+const QString &FileLogger::getExtension() const
+{
+    return m_extension;
 }
 
 qsizetype FileLogger::getFileSize() const
@@ -105,6 +115,19 @@ QString FileLogger::generateFilePathStr(const QString &fmtBasename) const
 QString FileLogger::generateFilePathVar(const QVariant &argBasename) const
 {
     return generateFilePathStr(generateFmtBasename(argBasename));
+}
+
+QStringList FileLogger::listFilesEntries(QDir::SortFlags sort) const
+{
+    const QStringList namesPattern = {
+        QString("*%1*.%2").arg(m_basename, m_extension)
+    };
+
+    return m_dir.entryList(
+        namesPattern,
+        QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot | QDir::Readable,
+        sort
+    );
 }
 
 void FileLogger::write(const LogBinary &log)

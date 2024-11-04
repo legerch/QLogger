@@ -13,7 +13,7 @@ class FileDailyLogger : public FileLogger
     Q_OBJECT
 
 public:
-    FileDailyLogger(const QFileInfo &file, const QTime &time, bool enableConsole, QObject *parent = nullptr);
+    FileDailyLogger(const QFileInfo &file, const QTime &time, uint maxFiles, bool enableConsole, QObject *parent = nullptr);
 
 protected:
     virtual QString generateFmtBasename(const QVariant &arg) const override;
@@ -26,9 +26,12 @@ private:
     void rotationProgram();
     void rotationPerform();
 
+    void cleanMaxLogs();
+
 private:
     QTime m_timeDaily;
     QDateTime m_nextRotation;
+    uint m_nbMaxFiles;
 };
 
 } // Namespace QLogger
