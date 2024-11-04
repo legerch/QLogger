@@ -50,6 +50,7 @@ set(PROJECT_HEADERS
     log/logentry.h
     log/logformatter.h
 
+    sinks/filedailylogger.h
     sinks/filelogger.h
     sinks/filerotatinglogger.h
 
@@ -63,6 +64,7 @@ set(PROJECT_SOURCES
     log/logentry.cpp
     log/logformatter.cpp
 
+    sinks/filedailylogger.cpp
     sinks/filelogger.cpp
     sinks/filerotatinglogger.cpp
 

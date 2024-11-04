@@ -1,5 +1,6 @@
 #include "qloggerfactory.h"
 
+#include "sinks/filedailylogger.h"
 #include "sinks/filerotatinglogger.h"
 
 /*****************************/
@@ -13,9 +14,10 @@
  * This class will allow to configure and manage
  * logs messages. \n
  * Multiple sinks are available:
+ * - File daily logger: \c initLoggerDaily()
  * - File rotating logger: \c initLoggerRotating()
  *
- * \sa initLoggerRotating()
+ * \sa initLoggerDaily(), initLoggerRotating()
  * \sa instance()
  */
 
@@ -47,6 +49,40 @@ QLoggerFactory::QLoggerFactory()
 }
 
 /*!
+ * \brief Use to configure daily file log sink
+ *
+ * \param[in] file
+ * Path of log file to use. \n
+ * \em Examples:
+ * - <tt>customlog.txt</tt>: Will create log messages
+ * in current directory and use \c customlog as pattern
+ * to use for the rotation
+ * - <tt>logs/customlog.txt: Will create custom log messages
+ * in \c logs directory and use \c customlog as pattern
+ * to use for the rotation
+ * \param[in]
+ * Daily time to use to perform rotation.
+ * \param[in] maxFiles
+ * Number of maximum log files in the directory allowing
+ * to manage memory used if needed. \n
+ * Use value \c 0 to disable limit of files.
+ * \param[in] enableConsole
+ * Set to \c true to enable console/terminal printing (helpful
+ * during development, useless in \em release mode)
+ *
+ * \note
+ * If any sinks already exist, it will be properly deleted.
+ *
+ * \sa desinit()
+ * \sa initLoggerRotating()
+ */
+void QLoggerFactory::initLoggerDaily(const QFileInfo &file, const QTime &time, uint maxFiles, bool enableConsole)
+{
+    m_logger = std::make_unique<FileDailyLogger>(file, time, maxFiles, enableConsole);
+    initGeneric();
+}
+
+/*!
  * \brief Use to configure rotating file log sink
  *
  * \param[in] file
@@ -59,7 +95,7 @@ QLoggerFactory::QLoggerFactory()
  * in \c logs directory and use \c customlog as pattern
  * to use for the rotation
  * \param[in] maxFiles
- * Number of file to use for rotation. \n
+ * Number of files to use for rotation. \n
  * For example, if set to \c 3, no more than 3
  * files will be used for rotation.
  * \param[in] maxFileSize
@@ -72,6 +108,7 @@ QLoggerFactory::QLoggerFactory()
  * If any sinks already exist, it will be properly deleted.
  *
  * \sa desinit()
+ * \sa initLoggerDaily()
  */
 void QLoggerFactory::initLoggerRotating(const QFileInfo &file, int maxFiles, qint64 maxSize, bool enableConsole)
 {
