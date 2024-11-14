@@ -89,8 +89,7 @@ QString LogEntry::getTypeString() const
         {QtInfoMsg, "info"},
         {QtWarningMsg, "warning"},
         {QtCriticalMsg, "critical"},
-        {QtFatalMsg, "fatal"},
-        {QtSystemMsg, "system"}
+        {QtFatalMsg, "fatal"}
     };
 
     /* Return associated type string */
