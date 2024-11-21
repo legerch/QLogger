@@ -1,0 +1,21 @@
+# Doxyfile 1.12.0
+
+# This file is used to generate internal API documentation for "QLogger"
+# project.
+# Please refer to "Doxyfile-common.in" file for more syntax details
+
+#---------------------------------------------------------------------------
+# Doxyfile fragments to include
+#---------------------------------------------------------------------------
+@INCLUDE                =   docs/fragments/Doxyfile-common.in
+
+#---------------------------------------------------------------------------
+# Custom configurations
+#---------------------------------------------------------------------------
+INPUT                   =   README.md \
+                            qlogger/
+
+ENABLED_SECTIONS        =   INTERNAL
+
+HTML_OUTPUT             =   api-internal
+EXTRACT_LOCAL_CLASSES   =   YES
