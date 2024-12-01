@@ -23,12 +23,23 @@
  */
 
 /*****************************/
-/* Enum documentations       */
+/* Callbacks documentations  */
 /*****************************/
 
-/*****************************/
-/* Structure documentations  */
-/*****************************/
+/*!
+ * \typedef QLogger::LogFormatter::CbFormatter
+ * \brief Callback used when formatting
+ * log message
+ * \details
+ * We can register a custom callback format by using:
+ * \include callback-format.cpp
+ *
+ * \param[in] logEntry
+ * Log entry to format.
+ *
+ * \sa setCbStarted()
+ * \sa startDownload()
+ */
 
 /*****************************/
 /* Signals documentations    */

@@ -158,6 +158,19 @@ QLoggerFactory& QLoggerFactory::instance()
     return instance;
 }
 
+/*!
+ * \brief Retrieve library semantic version at
+ * runtime.
+ *
+ * \note
+ * If compile time version check for library is needed,
+ * we can use macro \c QLOGGER_VERSION_ENCODE (defined
+ * inside \em qloggerglobal.h file)
+ *
+ * \return
+ * Return constant reference to semantic
+ * version of the library
+ */
 const QVersionNumber& QLoggerFactory::getLibraryVersion()
 {
     static const QVersionNumber semver(QLOGGER_VERSION_MAJOR, QLOGGER_VERSION_MINOR, QLOGGER_VERSION_PATCH);
