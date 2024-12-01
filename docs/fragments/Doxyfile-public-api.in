@@ -15,7 +15,9 @@
 INPUT                   =   README.md \
                             qlogger/
 
-EXCLUDE                 =
+EXCLUDE                 =   qlogger/log/logbinary.h \
+                            qlogger/log/logbinary.cpp \
+                            qlogger/sinks/
 
 HTML_OUTPUT             =   api-public
 EXTRACT_LOCAL_CLASSES   =   NO

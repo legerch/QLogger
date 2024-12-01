@@ -57,10 +57,10 @@ QLoggerFactory::QLoggerFactory()
  * - <tt>customlog.txt</tt>: Will create log messages
  * in current directory and use \c customlog as pattern
  * to use for the rotation
- * - <tt>logs/customlog.txt: Will create custom log messages
+ * - <tt>logs/customlog.txt</tt>: Will create custom log messages
  * in \c logs directory and use \c customlog as pattern
  * to use for the rotation
- * \param[in]
+ * \param[in] time
  * Daily time to use to perform rotation.
  * \param[in] maxFiles
  * Number of maximum log files in the directory allowing
@@ -91,7 +91,7 @@ void QLoggerFactory::initLoggerDaily(const QFileInfo &file, const QTime &time, u
  * - <tt>customlog.txt</tt>: Will create log messages
  * in current directory and use \c customlog as pattern
  * to use for the rotation
- * - <tt>logs/customlog.txt: Will create custom log messages
+ * - <tt>logs/customlog.txt</tt>: Will create custom log messages
  * in \c logs directory and use \c customlog as pattern
  * to use for the rotation
  * \param[in] maxFiles
