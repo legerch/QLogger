@@ -57,10 +57,10 @@ QLoggerFactory::QLoggerFactory()
  * - <tt>customlog.txt</tt>: Will create log messages
  * in current directory and use \c customlog as pattern
  * to use for the rotation
- * - <tt>logs/customlog.txt: Will create custom log messages
+ * - <tt>logs/customlog.txt</tt>: Will create custom log messages
  * in \c logs directory and use \c customlog as pattern
  * to use for the rotation
- * \param[in]
+ * \param[in] time
  * Daily time to use to perform rotation.
  * \param[in] maxFiles
  * Number of maximum log files in the directory allowing
@@ -91,7 +91,7 @@ void QLoggerFactory::initLoggerDaily(const QFileInfo &file, const QTime &time, u
  * - <tt>customlog.txt</tt>: Will create log messages
  * in current directory and use \c customlog as pattern
  * to use for the rotation
- * - <tt>logs/customlog.txt: Will create custom log messages
+ * - <tt>logs/customlog.txt</tt>: Will create custom log messages
  * in \c logs directory and use \c customlog as pattern
  * to use for the rotation
  * \param[in] maxFiles
@@ -152,10 +152,29 @@ void QLoggerFactory::setLevel(QtMsgType idType)
  * Return current unique instance
  * of QLoggerFactory
  */
-QLoggerFactory &QLoggerFactory::instance()
+QLoggerFactory& QLoggerFactory::instance()
 {
     static QLoggerFactory instance;
     return instance;
+}
+
+/*!
+ * \brief Retrieve library semantic version at
+ * runtime.
+ *
+ * \note
+ * If compile time version check for library is needed,
+ * we can use macro \c QLOGGER_VERSION_ENCODE (defined
+ * inside \em qloggerglobal.h file)
+ *
+ * \return
+ * Return constant reference to semantic
+ * version of the library
+ */
+const QVersionNumber& QLoggerFactory::getLibraryVersion()
+{
+    static const QVersionNumber semver(QLOGGER_VERSION_MAJOR, QLOGGER_VERSION_MINOR, QLOGGER_VERSION_PATCH);
+    return semver;
 }
 
 void QLoggerFactory::initGeneric()

@@ -68,6 +68,11 @@ LogEntry::LogEntry(QtMsgType idType, const QMessageLogContext &context, const QS
     }
 }
 
+/*!
+ * \brief Get message log type
+ * \return
+ * Return type of the log message entry
+ */
 QtMsgType LogEntry::getType() const
 {
     return m_idType;
@@ -207,6 +212,12 @@ QString LogEntry::getCtxFctName() const
     return match.captured(2);
 }
 
+/*!
+ * \brief Get log message
+ * \return
+ * Return reference to log content
+ * message
+ */
 const QString& LogEntry::getMsg() const
 {
     return m_msg;
