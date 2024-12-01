@@ -1,13 +1,47 @@
 #ifndef QLOGGER_GLOBAL_H
 #define QLOGGER_GLOBAL_H
 
-#include "config.h"
-#include <QtGlobal>
+/*!
+ * \file qloggerglobal.h
+ */
+
+/**********************************
+ * Library informations
+ *********************************/
+#define QLOGGER_INFO_NAME   "@PROJECT_NAME@"
+
+/**********************************
+ * Version management
+ *********************************/
+
+/*!
+ * \brief Use to perform compilation version comparisons
+ * \details
+ * For example:
+ * \code{.cpp}
+ * #if QLOGGER_VERSION >= QLOGGER_VERSION_ENCODE(1,0,0)
+ *     // Do stuff for version 1.0.0 or higher
+ * #else
+ *     // Do stuff for version 0.0.x
+ * #endif
+ * \endcode
+ */
+#define QLOGGER_VERSION_ENCODE(major, minor, path)    ((major) * 10000 + (minor) * 100 + (patch))
+
+#define QLOGGER_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define QLOGGER_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define QLOGGER_VERSION_PATCH @PROJECT_VERSION_PATCH@
+#define QLOGGER_VERSION       QLOGGER_VERSION_ENCODE(QLOGGER_VERSION_MAJOR, QLOGGER_VERSION_MINOR, QLOGGER_VERSION_PATCH)
+#define QLOGGER_VERSION_STR   "@PROJECT_VERSION@"
+
+/*!
+ * \cond INTERNAL
+ */
 
 /**********************************
  * Library management
  *********************************/
-#if defined(QLOGGER_LIB)
+#if defined(QLOGGER_LIBRARY_BUILD)
 #  define QLOGGER_EXPORT Q_DECL_EXPORT
 #else
 #  define QLOGGER_EXPORT Q_DECL_IMPORT
@@ -28,9 +62,9 @@
  * - Clang: https://clang.llvm.org/docs/LanguageExtensions.html#has-builtin
  *********************************/
 #if defined(__GNUC__) || defined(__clang__)
-#define QLOGGER_BUILTIN(x)  __has_builtin(x)
+#   define QLOGGER_BUILTIN(x)  __has_builtin(x)
 #else
-#define QLOGGER_BUILTIN(x)  0
+#   define QLOGGER_BUILTIN(x)  0
 #endif
 
 /**********************************
@@ -50,6 +84,12 @@
 #define QLOGGER_FCTSIG          Q_FUNC_INFO
 
 /**********************************
+ * Variables attributes
+ *********************************/
+#define QLOGGER_VAR_MAYBE_UNUSED    [[maybe_unused]]
+#define QLOGGER_VAR_UNUSED          QLOGGER_VAR_MAYBE_UNUSED
+
+/**********************************
  * Classes behaviours
  *********************************/
 #define QLOGGER_DISABLE_COPY(Class) \
@@ -60,5 +100,9 @@
 
 #define QLOGGER_DISABLE_COPY_MOVE(Class) \
     Q_DISABLE_COPY_MOVE(Class)
+
+/*!
+ * \endcond
+ */
 
 #endif // QLOGGER_GLOBAL_H

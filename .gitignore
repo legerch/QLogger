@@ -10,4 +10,4 @@ api-public/
 build/
 
 # Auto generated files
-config.h
+qloggerglobal.h
