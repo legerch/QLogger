@@ -9,6 +9,7 @@
 
 #include <QFileInfo>
 #include <QMutex>
+#include <QVersionNumber>
 
 namespace QLogger
 {
@@ -29,7 +30,8 @@ public:
     void setLevel(QtMsgType idType);
 
 public:
-    static QLoggerFactory &instance();
+    static QLoggerFactory& instance();
+    static const QVersionNumber& getLibraryVersion();
 
 private:
     void initGeneric();

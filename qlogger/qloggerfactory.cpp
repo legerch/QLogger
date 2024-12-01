@@ -152,10 +152,16 @@ void QLoggerFactory::setLevel(QtMsgType idType)
  * Return current unique instance
  * of QLoggerFactory
  */
-QLoggerFactory &QLoggerFactory::instance()
+QLoggerFactory& QLoggerFactory::instance()
 {
     static QLoggerFactory instance;
     return instance;
+}
+
+const QVersionNumber& QLoggerFactory::getLibraryVersion()
+{
+    static const QVersionNumber semver(QLOGGER_VERSION_MAJOR, QLOGGER_VERSION_MINOR, QLOGGER_VERSION_PATCH);
+    return semver;
 }
 
 void QLoggerFactory::initGeneric()

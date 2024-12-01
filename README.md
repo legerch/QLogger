@@ -1,4 +1,4 @@
-**QLogger** is made to be compatible with [_Qt framework logs_][doc-qt-log-module] management, this library provide an easy (and _thread-safe_) way to use multiple sinks behaviour.  
+[**QLogger**][repo-gh] is made to be compatible with [_Qt framework logs_][doc-qt-log-module] management, this library provide an easy (and _thread-safe_) way to use multiple sinks behaviour.  
 
 **Table of contents:**
 - [1. Requirements](#1-requirements)
@@ -11,6 +11,9 @@
   - [3.3. Customization](#33-customization)
     - [3.3.1. Log format](#331-log-format)
     - [3.3.2. Log level](#332-log-level)
+  - [3.4. Library version](#34-library-version)
+    - [3.4.1. Compilation time](#341-compilation-time)
+    - [3.4.2. Runtime](#342-runtime)
 - [4. Documentation](#4-documentation)
 - [5. Library details](#5-library-details)
   - [5.1. Why another log library ?](#51-why-another-log-library-)
@@ -175,6 +178,27 @@ QLogger::QLoggerFactory::instance().setLevel(QtWarningMsg);
 > [!NOTE]
 > This example will set logger to only manage message of level: `QtWarningMsg`, `QtCriticalMsg` and `QtFatalMsg`
 
+## 3.4. Library version
+### 3.4.1. Compilation time
+
+In order to easily check at compilation time library version (to manage compatibility between multiple versions for example), macro `QLOGGER_VERSION_ENCODE` (defined inside _qloggerglobal.h_ file) can be used:
+```cpp
+#if QLOGGER_VERSION >= QLOGGER_VERSION_ENCODE(2,0,0)
+    // Do stuff for version 2.0.0 or higher
+#else
+    // Do stuff for earlier versions
+#endif
+```
+
+### 3.4.2. Runtime
+
+At runtime, it is recommended to use the static method:
+```cpp
+#include "qlogger/qloggerfactory.h"
+
+const QVersionNumber &qloggerSemver = QLogger::QLoggerFactory::getLibraryVersion();
+```
+
 # 4. Documentation
 
 All classes/methods has been documented with [Doxygen][doc-doxygen] utility and automatically generated at [online website documentation][repo-doc-web].
@@ -210,7 +234,7 @@ Note that (at least !) a **C++11** compiler is required (**C++11** added require
 > - [Stackexchange - Singleton class and correct way to access it in C++][doc-singleton-meyer-2]
 > - [Stackoverflow - How is Meyers' implementation of a Singleton actually a Singleton][doc-singleton-meyer-3]
 
-Then, library thread-safety is ensured by using a mutex whenever a log message is received (to prevent for thread-race issues when trying to write to log file for example).
+Then, library thread-safety is ensured by using a mutex whenever a log message is received (to prevent from thread-race issues when trying to write to log to file for example).
 
 # 6. License
 
@@ -240,7 +264,8 @@ This library is licensed under [MIT license][repo-license].
 [anchor-implementation]: #52-implementation
 
 <!-- Repository links -->
-[repo-doc-web]: https://github.com/legerch/QLogger
+[repo-gh]: https://github.com/legerch/QLogger
+[repo-doc-web]: https://legerch.github.io/QLogger/
 [repo-license]: LICENSE
 
 <!-- External links -->
