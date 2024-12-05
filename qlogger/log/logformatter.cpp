@@ -85,7 +85,7 @@ QString LogFormatter::defaultFormatter(const LogEntry &log)
 {
     /* Add log main informations */
     QString fmt = QString("[%1][%2] %3").arg(
-        QDateTime::currentDateTimeUtc().toString(Qt::ISODate),
+        QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs),
         log.getTypeString(),
         log.getMsg()
     );

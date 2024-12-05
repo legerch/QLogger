@@ -109,8 +109,8 @@ qDebug("String [%s] converted as number is [%d]", qUtf8Printable(strValue), valu
 
 This will log:
 ```text
-[2023-07-09T13:36:09Z][debug] My value is: 9 (mainwindow.cpp:14, onMyCustomBtnClicked)
-[2023-07-09T13:36:09Z][debug] String [nine] converted as number is [9] (mainwindow.cpp:15, onMyCustomBtnClicked)
+[2023-07-09T13:36:09.245Z][debug] My value is: 9 (mainwindow.cpp:14, onMyCustomBtnClicked)
+[2023-07-09T13:36:09.246Z][debug] String [nine] converted as number is [9] (mainwindow.cpp:15, onMyCustomBtnClicked)
 ```
 
 Format log message can also be customized by using a custom `QLogger::LogFormatter` method, here an example:
@@ -131,7 +131,7 @@ Format log message can also be customized by using a custom `QLogger::LogFormatt
 QString logFormatter(const QLogger::LogEntry &log)
 {
     QString fmt = QString("[%1][%2] %3").arg(
-        QDateTime::currentDateTimeUtc().toString(Qt::ISODate),
+        QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs),
         log.getTypeString(),
         log.getMsg()
     );
