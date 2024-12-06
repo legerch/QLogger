@@ -1,0 +1,23 @@
+# Doxyfile 1.12.0
+
+# This file is used to generate public API documentation for "QLogger"
+# project.
+# Please refer to "Doxyfile-common.in" file for more syntax details
+
+#---------------------------------------------------------------------------
+# Doxyfile fragments to include
+#---------------------------------------------------------------------------
+@INCLUDE                =   docs/fragments/Doxyfile-common.in
+
+#---------------------------------------------------------------------------
+# Custom configurations
+#---------------------------------------------------------------------------
+INPUT                   =   README.md \
+                            qlogger/
+
+EXCLUDE                 =   qlogger/log/logbinary.h \
+                            qlogger/log/logbinary.cpp \
+                            qlogger/sinks/
+
+HTML_OUTPUT             =   api-public
+EXTRACT_LOCAL_CLASSES   =   NO
