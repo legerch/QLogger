@@ -3,12 +3,20 @@
 All notable changes to this project will be documented in this file.  
 The format is based on [Keep a Changelog] and this project adheres to [Semantic Versioning].
 
-## [next] - 2.0.0
+## [next] - 2.0.1
+
+## [2.0.0] - 2024-12-06
 ### Added
 - Add support for multiples sinks, allowing to choose behaviour of the logger. Current sinks available are:
   - File rotating logs
+  - Daily logs
 - Allow to use custom formatter via `QLogger::LogFormatter`
 - Add support for log level: user can now set a minimum level
+- Documentation is now supporting a _public_ (which is available online) and an _internal_ version
+- Add more tools to manage library version
+
+### Changed
+- Default log formatter now include milliseconds in the timestamp
 
 ## [1.0.2] - 2024-08-02
 ### Fixed
@@ -29,7 +37,8 @@ First release of `QLogger` which allow to:
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
 <!-- Versions -->
-[next]: https://github.com/legerch/QLogger/compare/1.0.2...dev
+[next]: https://github.com/legerch/QLogger/compare/2.0.0...dev
+[2.0.0]: https://github.com/legerch/QLogger/compare/1.0.2...2.0.0
 [1.0.2]: https://github.com/legerch/QLogger/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/legerch/QLogger/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/legerch/QLogger/releases/tag/1.0.0

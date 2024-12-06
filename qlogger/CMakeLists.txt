@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 
 # Set project properties
 set(PROJECT_NAME qlogger)
-set(PROJECT_VERSION_SEMANTIC 1.0.2)
+set(PROJECT_VERSION_SEMANTIC 2.0.0)
 set(PROJECT_VERSION_CPP_MIN 11)
 
 # Set project configuration
